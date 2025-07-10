@@ -20,6 +20,7 @@ import AdminDashBoard from "../Pages/DashBoard/AdminDashBoard/AdminDashBoard/Adm
 import ApproveContact from "../Pages/DashBoard/AdminDashBoard/ApproveContact/ApproveContact";
 import ApprovePremium from "../Pages/DashBoard/AdminDashBoard/ApprovePremium/ApprovePremium";
 import ManageUsers from "../Pages/DashBoard/AdminDashBoard/ManageUsers/ManageUsers";
+import SuccessStories from "../Pages/DashBoard/AdminDashBoard/SuccessStories/SuccessStories";
 
 
 export const router = createBrowserRouter([
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
       {
         path: "approvedContact",
         element: <ApproveContact></ApproveContact>
+      },
+      {
+        path: "successStories",
+        element: <SuccessStories></SuccessStories>
       }
     ]
   },
