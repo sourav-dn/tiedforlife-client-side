@@ -17,6 +17,7 @@ import CreateStory from "../Pages/DashBoard/CreateStory/CreateStory";
 import SuccessStoryDetails from "../Pages/Home/SuccessStory/SuccessStoryDetails";
 import Payment from "../Pages/BioData/Payment/Payment";
 import AdminDashBoard from "../Pages/DashBoard/AdminDashBoard/AdminDashBoard/AdminDashBoard";
+import ApproveContact from "../Pages/DashBoard/AdminDashBoard/ApproveContact/ApproveContact";
 
 
 export const router = createBrowserRouter([
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
       {
         path: "adminDashboard",
         element: <AdminDashBoard></AdminDashBoard>
+      },
+      {
+        path: "approvedContact",
+        element: <ApproveContact></ApproveContact>
       }
     ]
   },
