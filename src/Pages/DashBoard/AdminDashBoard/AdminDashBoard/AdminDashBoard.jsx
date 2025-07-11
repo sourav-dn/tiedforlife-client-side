@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { FaFemale, FaMale, FaMoneyBillWave, FaStar, FaUsers } from "react-icons/fa";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { Card } from "flowbite-react";
 
 
 const AdminDashBoard = () => {

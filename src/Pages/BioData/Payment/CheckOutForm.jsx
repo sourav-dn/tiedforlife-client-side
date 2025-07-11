@@ -21,7 +21,7 @@ const CheckOutForm = () => {
     const location = useLocation();
     const biodataToPayFor = location.state;
 
-    const totalPrice = 5; // The price in dollars
+    const totalPrice = 500; // The price in dollars
 
     useEffect(() => {
         if (totalPrice > 0) {
