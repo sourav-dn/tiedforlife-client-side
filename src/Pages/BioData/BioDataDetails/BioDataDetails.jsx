@@ -16,7 +16,7 @@ const BioDataDetails = () => {
     // Destructure the CORRECT property names from your data
     const {
         _id,
-        id:biodataId,
+        id: biodataId,
         gender,
         fullName,
         profilePicture,
@@ -35,7 +35,7 @@ const BioDataDetails = () => {
         mobileNumber,
     } = useLoaderData();
 
-    
+
 
     const [similarBiodata, setSimilarBiodata] = useState([]);
 
@@ -43,7 +43,7 @@ const BioDataDetails = () => {
     useEffect(() => {
         const fetchSimilarBiodata = async () => {
             // Don't fetch if gender isn't loaded yet
-            if (!gender) return; 
+            if (!gender) return;
             try {
                 const response = await axiosSecure.get(`/bioData?biodataType=${gender}`);
                 // Filter out the current profile from the similar list
@@ -84,23 +84,23 @@ const BioDataDetails = () => {
                 });
                 refetch();
             } else {
-                 Swal.fire("Already Added", res.data.message, "info");
+                Swal.fire("Already Added", res.data.message, "info");
             }
         });
     };
 
     // Handle Request Contact button click
     const handleReqContact = () => {
-            const contactData = {
-      fullName,
-      biodataId,
-      contactEmail,
-      mobileNumber,
-    };
-        navigate(`/payment/${_id}`,{
+        const contactData = {
+            fullName,
+            biodataId,
+            contactEmail,
+            mobileNumber,
+        };
+        navigate(`/payment/${_id}`, {
             state: contactData,
         });
-        
+
     };
 
     return (
@@ -192,6 +192,21 @@ const BioDataDetails = () => {
                     </div>
                 </div>
 
+                {/* Contact Info */}
+                <div className="mt-6 bg-pink-50 p-6 rounded-lg shadow-md">
+                    <h3 className="text-lg font-semibold text-yellow-600 mb-3">
+                        Contact Information
+                    </h3>
+                    <p className="text-gray-700">
+                        <strong className="text-pink-600">Email:</strong> "Request Contact
+                        Information"
+                    </p>
+                    <p className="text-gray-700">
+                        <strong className="text-pink-600">Mobile:</strong> "Request Contact
+                        Information"
+                    </p>
+                </div>
+
                 {/* Action Buttons */}
                 <div className="mt-6 flex flex-col sm:flex-row sm:justify-between gap-4">
                     <Button onClick={handleAddFavorite} className="bg-pink-500 hover:bg-pink-700">
@@ -209,7 +224,7 @@ const BioDataDetails = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {similarBiodata.map((bio) => (
                         <Card key={bio._id} className="shadow-md">
-                            <img src={bio.profilePicture} alt="Profile" className="h-40 w-full object-cover"/>
+                            <img src={bio.profilePicture} alt="Profile" className="h-40 w-full object-cover" />
                             <div className="p-4">
                                 <h4 className="text-lg font-semibold">{bio.fullName}</h4>
                                 <p className="text-gray-600">Age: {bio.age}</p>
