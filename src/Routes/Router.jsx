@@ -21,6 +21,7 @@ import ApproveContact from "../Pages/DashBoard/AdminDashBoard/ApproveContact/App
 import ApprovePremium from "../Pages/DashBoard/AdminDashBoard/ApprovePremium/ApprovePremium";
 import ManageUsers from "../Pages/DashBoard/AdminDashBoard/ManageUsers/ManageUsers";
 import SuccessStories from "../Pages/DashBoard/AdminDashBoard/SuccessStories/SuccessStories";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([
@@ -44,12 +45,12 @@ export const router = createBrowserRouter([
         },
         {
           path: "/bioData/:id",
-          element: <BioDataDetails></BioDataDetails>,
+          element: <PrivateRoute><BioDataDetails></BioDataDetails></PrivateRoute>,
           loader: ({ params }) => fetch(`http://localhost:3000/bioData/${params.id}`)
         },
         {
           path: "payment/:id",
-          element: <Payment></Payment>
+          element: <PrivateRoute><Payment></Payment></PrivateRoute>
         },
         {
           path: "/aboutUs",
@@ -71,31 +72,31 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashBoardLayout></DashBoardLayout>,
+    element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
     children: [
       {
         index: true,
-        element: <DashBoardHome></DashBoardHome>
+        element: <PrivateRoute><DashBoardHome></DashBoardHome></PrivateRoute>
       },
       {
         path: "editBio",
-        element: <EditBioData></EditBioData>
+        element: <PrivateRoute><EditBioData></EditBioData></PrivateRoute>
       },
       {
         path: "viewBio",
-        element: <ViewBio></ViewBio>
+        element: <PrivateRoute><ViewBio></ViewBio></PrivateRoute>
       },
       {
         path: "contact-request",
-        element: <ContactRequest></ContactRequest>
+        element: <PrivateRoute><ContactRequest></ContactRequest></PrivateRoute>
       },
       {
         path: "favoriteBio",
-        element: <FavoriteBio></FavoriteBio>
+        element: <PrivateRoute><FavoriteBio></FavoriteBio></PrivateRoute>
       },
       {
         path: "createStory",
-        element: <CreateStory></CreateStory>
+        element: <PrivateRoute><CreateStory></CreateStory></PrivateRoute>
       },
 
       // admin route
