@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import loginLottie from "../../assets/lottie/login.json";
 import { Card, Label, TextInput } from "flowbite-react";
-import SocialLogin from "../../Components/SocialLogin/SocialLogin.jsx";
-// import { AuthContext } from "../../Provider/AuthProvider.jsx";
 import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
@@ -113,7 +111,7 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <div className="mt-6">
+                        <div className="mt-5">
                             <button
                                 type="submit"
                                 className="w-full mt-4 py-2 px-4 rounded-lg transition-all bg-yellow-400 text-white hover:bg-pink-400"
@@ -136,23 +134,33 @@ const Login = () => {
                         </div>
                     </form>
 
-                    <div className="my-2 mx-6 flex flex-col space-y-2">
-                        <button
+                    <div className="my-2 mx-6 flex justify-between space-y-2">
+                        {/* <button
                             onClick={handleGoogleSignIn}
                             className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
                         >
                             Sign in with Google
+                        </button> */}
+
+                        <button onClick={handleGoogleSignIn} type="button" class="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2">
+                            <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                                <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd" />
+                            </svg>
+                            Sign in with Google
                         </button>
 
                         <div className="flex justify-between">
-                            <SocialLogin /> {/* optional - you can remove if duplicating */}
+                            
 
-                            <button
+                            {/* <button
                                 onClick={adminLogin}
                                 className="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600"
                             >
                                 Admin Login
-                            </button>
+                            </button> */}
+
+                            <button onClick={adminLogin} type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Admin Login</button>
+
                         </div>
                     </div>
                 </Card>
