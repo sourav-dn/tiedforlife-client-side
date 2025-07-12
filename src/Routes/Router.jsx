@@ -22,12 +22,14 @@ import ApprovePremium from "../Pages/DashBoard/AdminDashBoard/ApprovePremium/App
 import ManageUsers from "../Pages/DashBoard/AdminDashBoard/ManageUsers/ManageUsers";
 import SuccessStories from "../Pages/DashBoard/AdminDashBoard/SuccessStories/SuccessStories";
 import PrivateRoute from "./PrivateRoute";
+import Error from "../Pages/ErrorPage/Error";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <Error></Error>,
     children: [
         {
             index: true,
