@@ -41,7 +41,7 @@ const BioDataCard = ({data}) => {
                 </p>
                 <Link to={`/bioData/${_id}`}>
                     <button className="mt-4 bg-gradient-to-r from-pink-400 to-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">
-                        View Details
+                        View Profile
                     </button>
                 </Link>
             </div>
