@@ -233,7 +233,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                     )}
 
                     {/* Modal Component */}
-                    <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    {/* <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
                         <Modal.Header>Request Premium</Modal.Header>
                         <Modal.Body>
                             <p>Are you sure you want to request a premium membership?</p>
@@ -244,7 +244,20 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                                 Cancel
                             </Button>
                         </Modal.Footer>
+                    </Modal> */}
+                    <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                        <div className="p-6 space-y-4">
+                            <h3 className="text-xl font-semibold text-gray-900">Request Premium</h3>
+                            <p>Are you sure you want to request a premium membership?</p>
+                            <div className="flex justify-end space-x-3">
+                                <Button onClick={handlePremiumRequest}>Yes, Request</Button>
+                                <Button color="gray" onClick={() => setIsModalOpen(false)}>
+                                    Cancel
+                                </Button>
+                            </div>
+                        </div>
                     </Modal>
+
                 </Card>
             ) : (
                 <div className="text-center text-xl font-semibold text-gray-700">
