@@ -19,26 +19,47 @@ const Banner = () => {
         showStatus={false} 
         stopOnHover={false}
         >
-                <div className="h-[800px]">
-                    <img src={img1} />                  
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img1} />                  
                 </div>
-                <div className="h-[800px]">
-                    <img src={img2} />                   
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img2} />                   
                 </div>
-                <div className="h-[800px]">
-                    <img src={img3} />                   
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img3} />                   
                 </div>
-                <div className="h-[800px]">
-                    <img src={img4} />                    
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img4} />                    
                 </div>
-                <div className="h-[800px]">
-                    <img src={img5} />                    
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img5} />                    
                 </div>
-                <div className="h-[800px]">
-                    <img src={img6} />                  
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img6} />                  
                 </div>
-                <div className="h-[800px]">
-                    <img src={img7} />
+                <div className="h-[200px]
+                        sm:h-[300px]
+                        md:h-[500px]
+                        lg:h-[700px]">
+                    <img className="w-full h-full object-cover" src={img7} />
                 </div>
             </Carousel>
     );
