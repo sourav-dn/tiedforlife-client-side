@@ -15,8 +15,8 @@ const EditBioData = ({ biodataId }) => {
         biodataId: "",
         gender: "",
         name: "",
-        profileImage: "",
-        dob: "",
+        profilePicture: "",
+        dateOfBirth: "",
         height: "",
         weight: "",
         age: "",
@@ -157,9 +157,9 @@ const EditBioData = ({ biodataId }) => {
                 <div>
                     <p className="font-bold text-sm">Profile Image URL</p>
                     <TextInput
-                        id="profileImage"
-                        name="profileImage"
-                        value={biodata.profileImage}
+                        id="profilePicture"
+                        name="profilePicture"
+                        value={biodata.profilePicture}
                         onChange={handleChange}
                         required
                         type="text"
@@ -172,10 +172,10 @@ const EditBioData = ({ biodataId }) => {
                 <div>
                     <p className="font-bold text-sm">Date of Birth</p>
                     <TextInput
-                        id="dob"
-                        name="dob"
+                        id="dateOfBirth"
+                        name="dateOfBirth"
                         type="date"
-                        value={biodata.dob}
+                        value={biodata.dateOfBirth}
                         onChange={handleChange}
                         required
                         className="border-2 border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 p-2"

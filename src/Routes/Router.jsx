@@ -31,45 +31,52 @@ export const router = createBrowserRouter([
     element: <MainLayout></MainLayout>,
     errorElement: <Error></Error>,
     children: [
-        {
-            index: true,
-            Component: Home
-        },
-        {
-          path: "/successReview/:id",
-          element: <SuccessStoryDetails></SuccessStoryDetails>,
-          loader: ({ params }) => fetch(`http://localhost:3000/successReview/${params.id}`)
-        },
-        {
-          path: "/bioData",
-          element: <BioData></BioData>,
-          loader: (() => fetch('http://localhost:3000/bioDataCount'))
-        },
-        {
-          path: "/bioData/:id",
-          element: <PrivateRoute><BioDataDetails></BioDataDetails></PrivateRoute>,
-          loader: ({ params }) => fetch(`http://localhost:3000/bioData/${params.id}`)
-        },
-        {
-          path: "payment/:id",
-          element: <PrivateRoute><Payment></Payment></PrivateRoute>
-        },
-        {
-          path: "/aboutUs",
-          element: <AboutUs></AboutUs>
-        },
-        {
-          path:"/contactUs",
-          element: <ContactUs></ContactUs>
-        },
-        {
-          path: "/login",
-          element: <Login></Login>
-        },
-        {
-          path: "/register",
-          element: <Register></Register>
-        }
+      {
+        index: true,
+        Component: Home
+      },
+      {
+        path: "/successReview/:id",
+        element: <SuccessStoryDetails></SuccessStoryDetails>,
+        loader: ({ params }) => fetch(`http://localhost:3000/successReview/${params.id}`)
+      },
+      {
+        path: "/bioData",
+        element: <BioData></BioData>,
+        loader: (() => fetch('http://localhost:3000/bioDataCount'))
+      },
+      {
+        path: "bioData/:id",
+        element: <PrivateRoute><BioDataDetails /></PrivateRoute>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/bioData/${params.id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+            },
+          })
+            .then(res => res.json()),
+      },
+      {
+        path: "payment/:id",
+        element: <PrivateRoute><Payment></Payment></PrivateRoute>
+      },
+      {
+        path: "/aboutUs",
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: "/contactUs",
+        element: <ContactUs></ContactUs>
+      },
+      {
+        path: "/login",
+        element: <Login></Login>
+      },
+      {
+        path: "/register",
+        element: <Register></Register>
+      }
     ]
   },
   {

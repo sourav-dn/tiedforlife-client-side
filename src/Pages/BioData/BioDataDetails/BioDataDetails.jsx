@@ -40,23 +40,60 @@ const BioDataDetails = () => {
     const [similarBiodata, setSimilarBiodata] = useState([]);
 
     // Fetch similar biodata based on gender
+    // useEffect(() => {
+    //     const fetchSimilarBiodata = async () => {
+    //         // Don't fetch if gender isn't loaded yet
+    //         if (!gender) return;
+    //         try {
+    //             const response = await axiosSecure.get(`/bioData?biodataType=${gender}`);
+    //             // Filter out the current profile from the similar list
+    //             const filteredBiodata = response.data.filter(
+    //                 (b) => b.biodataId !== biodataId
+    //             );
+    //             setSimilarBiodata(filteredBiodata.slice(0, 3)); // Get up to 3 similar profiles
+    //         } catch (error) {
+    //             console.error("Error fetching similar biodata:", error);
+    //         }
+    //     };
+    //     fetchSimilarBiodata();
+    // }, [gender, biodataId, axiosSecure]);
+
     useEffect(() => {
-        const fetchSimilarBiodata = async () => {
-            // Don't fetch if gender isn't loaded yet
-            if (!gender) return;
-            try {
-                const response = await axiosSecure.get(`/bioData?biodataType=${gender}`);
-                // Filter out the current profile from the similar list
-                const filteredBiodata = response.data.filter(
-                    (b) => b.biodataId !== biodataId
-                );
-                setSimilarBiodata(filteredBiodata.slice(0, 3)); // Get up to 3 similar profiles
-            } catch (error) {
-                console.error("Error fetching similar biodata:", error);
-            }
-        };
-        fetchSimilarBiodata();
-    }, [gender, biodataId, axiosSecure]);
+    const fetchSimilarBiodata = async () => {
+      try {
+        const response = await axiosSecure.get(
+          `/biodata?biodataType=${gender}`
+        );
+        // console.log("Fetched biodata:", response.data);
+        const filteredBiodata = response.data.filter(
+          (b) => b.biodataId !== biodataId && b.biodataType === gender
+        );
+        // console.log("Filtered biodata:", filteredBiodata);
+
+        const maleBiodata = filteredBiodata
+          .filter((b) => b.biodataType.toLowerCase() === "male")
+          .slice(0, 3);
+        const femaleBiodata = filteredBiodata
+          .filter((b) => b.biodataType.toLowerCase() === "female")
+          .slice(0, 3);
+
+        // console.log("Male biodata:", maleBiodata);
+        // console.log("Female biodata:", femaleBiodata);
+
+        if (maleBiodata.length > 0) {
+          setSimilarBiodata(maleBiodata);
+        } else if (femaleBiodata.length > 0) {
+          setSimilarBiodata(femaleBiodata);
+        } else {
+          setSimilarBiodata([]);
+        }
+      } catch (error) {
+        console.error("Error fetching similar biodata:", error);
+      }
+    };
+
+    fetchSimilarBiodata();
+  }, [gender, biodataId, axiosSecure]);
 
     // Handle Add to Favorites button click
     const handleAddFavorite = () => {
@@ -83,6 +120,7 @@ const BioDataDetails = () => {
                     timer: 1500,
                 });
                 refetch();
+                navigate("/dashboard/favoriteBio");
             } else {
                 Swal.fire("Already Added", res.data.message, "info");
             }
@@ -197,14 +235,23 @@ const BioDataDetails = () => {
                     <h3 className="text-lg font-semibold text-yellow-600 mb-3">
                         Contact Information
                     </h3>
-                    <p className="text-gray-700">
+                    {/* <p className="text-gray-700">
                         <strong className="text-pink-600">Email:</strong> "Request Contact
                         Information"
                     </p>
                     <p className="text-gray-700">
                         <strong className="text-pink-600">Mobile:</strong> "Request Contact
                         Information"
+                    </p> */}
+                    <p className="text-gray-700 dark:text-gray-100">
+                        <strong className="text-pink-600">Email:</strong>{" "}
+                        {contactEmail ? contactEmail : "Request Contact Information"}
                     </p>
+                    <p className="text-gray-700 dark:text-gray-100">
+                        <strong className="text-pink-600">Mobile:</strong>{" "}
+                        {mobileNumber ? mobileNumber : "Request Contact Information"}
+                    </p>
+
                 </div>
 
                 {/* Action Buttons */}
@@ -216,6 +263,7 @@ const BioDataDetails = () => {
                         <FaPhoneAlt className="mr-2 h-5 w-5" /> Request Contact Information
                     </Button>
                 </div>
+
             </Card>
 
             {/* Similar Biodata Section */}

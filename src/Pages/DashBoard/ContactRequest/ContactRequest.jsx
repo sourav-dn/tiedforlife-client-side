@@ -45,17 +45,29 @@ const ContactRequest = () => {
     };
 
     // Handle status update
+    // const updateStatusMutation = useMutation({
+    //     mutationFn: async ({ _id, status }) => {
+    //         const res = await axiosSecure.patch(`/contact/${_id}`, { status });
+    //         return res.data;
+    //     },
+    //     onSuccess: () => {
+    //         Swal.fire("Status Updated!", "The status has been updated.", "success");
+    //         refetch();
+    //     },
+    //     onError: () => {
+    //         Swal.fire("Error!", "Failed to update status.", "error");
+    //     },
+    // });
+
+    // Mutation for updating the status of a contact request
     const updateStatusMutation = useMutation({
-        mutationFn: async ({ _id, status }) => {
-            const res = await axiosSecure.patch(`/contact/${_id}`, { status });
-            return res.data;
-        },
+        mutationFn: ({ _id, status }) => axiosSecure.patch(`/contact/${_id}`, { status }),
         onSuccess: () => {
-            Swal.fire("Status Updated!", "The status has been updated.", "success");
-            refetch();
+            Swal.fire("Status Updated!", "The status has been successfully updated.", "success");
+            refetch(); // Refetch the data to show the updated status and contact info
         },
         onError: () => {
-            Swal.fire("Error!", "Failed to update status.", "error");
+            Swal.fire("Error!", "Failed to update the status.", "error");
         },
     });
 
@@ -109,9 +121,25 @@ const ContactRequest = () => {
                                             {payment.status || "Pending"}
                                         </button>
                                     </td>
-                                    <td className="border border-pink-300 px-4 py-2">
+                                    {/* <td className="border border-pink-300 px-4 py-2">
                                         {payment.mobileNumber || "N/A"}
+                                    </td> */}
+
+                                    {/* <td className="border border-pink-300 px-4 py-2">
+                                        {payment.status === "Approved"
+                                            ? payment.mobileNumber
+                                            : "Pending Approval"}
+                                    </td> */}
+
+                                    <td className="border border-pink-300 px-4 py-2">
+                                        {/* FIX: Conditionally render mobile number and add fallback */}
+                                        {payment.status?.toLowerCase() === 'approved' ? (
+                                            payment.mobileNumber || <span className="text-gray-500">Not Available</span>
+                                        ) : (
+                                            <span className="text-gray-500">Pending Approval</span>
+                                        )}
                                     </td>
+
                                     <td className="border border-pink-300 px-4 py-2">
                                         {payment.email || "N/A"}
                                     </td>
