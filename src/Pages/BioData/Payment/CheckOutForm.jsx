@@ -20,7 +20,7 @@ const CheckOutForm = () => {
     // FIX 3: Get the biodata from the navigation state
     const location = useLocation();
     const biodataToPayFor = location.state;
-
+    console.log("Data received in checkout:", biodataToPayFor);
     const totalPrice = 500; // The price in dollars
 
     useEffect(() => {
@@ -84,7 +84,7 @@ const CheckOutForm = () => {
                 const payment = {
                     // FIX 5: Use the data from location state
                     name: biodataToPayFor?.fullName,
-                    email: user?.email,
+                    email: user?.contactEmail,
                     mobileNumber: biodataToPayFor?.mobileNumber,
                     transitionId: paymentIntent.id,
                     price: totalPrice,

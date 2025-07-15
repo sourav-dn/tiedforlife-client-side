@@ -1,65 +1,98 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, Sidebar } from "flowbite-react";
 import Cover from "../../../Components/Shared/Cover/Cover.jsx";
 import coverImg from "../../../assets/Cover/cover1.jpg";
 import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
 import { useLoaderData } from "react-router";
 import BioDataCard from "../BioData/BioDataCard.jsx";
+import useFilter from "../../../hooks/useFilter.jsx";
 
 const BioData = () => {
     const [minAge, setMinAge] = useState("");
     const [maxAge, setMaxAge] = useState("");
     const [gender, setGender] = useState("");
     const [division, setDivision] = useState("");
-    const [bioData, setBioData] = useState([]); // bioData state directly managed here
+    // const [bioData, setBioData] = useState([]); // bioData state directly managed here
+    const { bioData, setBioData } = useFilter(minAge, maxAge, gender, division);
     const [currentPage, setCurrentPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const axiosSecure = useAxiosSecure();
 
     // Function to fetch biodata based on current filter states (can be reused)
-    const fetchBioDataWithFilters = async (
-        ageMin,
-        ageMax,
-        bioType,
-        permDivision
-        // Pagination parameters (page, limit) would be added here if backend handles it
-    ) => {
-        try {
-            const res = await axiosSecure.get(
-                // Construct URL with parameters. Empty strings will be sent for unfilled fields,
-                // which the backend is designed to ignore due to its 'if (param)' checks.
-                `/bioData?minAge=${ageMin || ''}&maxAge=${ageMax || ''}&biodataType=${bioType || ''}&permanentDivision=${permDivision || ''}`,
-                {
-                    withCredentials: true,
-                }
-            );
-            setBioData(res?.data);
-        } catch (error) {
-            console.error("Error fetching bioData:", error);
-        }
-    };
+    // const fetchBioDataWithFilters = async (
+    //     ageMin,
+    //     ageMax,
+    //     bioType,
+    //     permDivision
+    //     // Pagination parameters (page, limit) would be added here if backend handles it
+    // ) => {
+    //     try {
+    //         const res = await axiosSecure.get(
+    //             // Construct URL with parameters. Empty strings will be sent for unfilled fields,
+    //             // which the backend is designed to ignore due to its 'if (param)' checks.
+    //             `/bioData?minAge=${ageMin || ''}&maxAge=${ageMax || ''}&biodataType=${bioType || ''}&permanentDivision=${permDivision || ''}`,
+    //             {
+    //                 withCredentials: true,
+    //             }
+    //         );
+    //         setBioData(res?.data);
+    //     } catch (error) {
+    //         console.error("Error fetching bioData:", error);
+    //     }
+    // };
 
     // Initial fetch of all biodata when the component mounts.
     // This will result in an initial 'Query: {}' on the backend, which is expected for an unfiltered load.
-    useEffect(() => {
-        fetchBioDataWithFilters(minAge, maxAge, gender, division); // Initial call with empty filter states
-    }, [axiosSecure]); // Dependency on axiosSecure to avoid lint warnings; effectively runs once on mount
+    // useEffect(() => {
+    //     fetchBioDataWithFilters(minAge, maxAge, gender, division); // Initial call with empty filter states
+    // }, [axiosSecure]); // Dependency on axiosSecure to avoid lint warnings; effectively runs once on mount
 
     // Handler for filter form submission
-    const handleFilter = (e) => {
-        e.preventDefault();
-        // Trigger a fetch with the current state values
-        fetchBioDataWithFilters(minAge, maxAge, gender, division);
-        setCurrentPage(0); // Reset to first page after applying new filters
-    };
+    // const handleFilter = (e) => {
+    //     e.preventDefault();
+    //     // Trigger a fetch with the current state values
+    //     fetchBioDataWithFilters(minAge, maxAge, gender, division);
+    //     setCurrentPage(0); // Reset to first page after applying new filters
+    // };
 
     // Pagination logic (assuming count is loaded correctly via useLoaderData)
-    const { count } = useLoaderData();
+    // const { count } = useLoaderData();
 
     // FIX: Ensure count is a valid number to prevent "Invalid array length" error.
-    const safeCount = typeof count === 'number' && count >= 0 ? count : 0;
+    // const safeCount = typeof count === 'number' && count >= 0 ? count : 0;
 
-    const numberOfPages = Math.ceil(safeCount / itemsPerPage);
+
+
+    const handleFilter = (e) => {
+    e.preventDefault();
+    // console.log(minAge, maxAge, gender, division);
+
+    axiosSecure
+      .get(
+        `/bioData?minAge=${minAge}&maxAge=${maxAge}&gender=${gender}&permanentDivision=${division}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        // console.log(res);
+        setBioData(res?.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching bioData:", error);
+      });
+
+    // }, [];
+  };
+
+  const { count } = useLoaderData();
+
+  const numberOfPages = Math.ceil(count / itemsPerPage);
+
+
+
+
+    // const numberOfPages = Math.ceil(safeCount / itemsPerPage);
     const pages = [...Array(numberOfPages).keys()]; // Creates an array [0, 1, ..., numberOfPages-1]
 
     const handleItemsPerPage = (e) => {
@@ -106,7 +139,7 @@ const BioData = () => {
                                     type="number"
                                     className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
                                     placeholder="Min Age"
-                                    value={minAge} 
+                                    value={minAge}
                                 />
                             </div>
                             <div>
@@ -118,7 +151,7 @@ const BioData = () => {
                                     type="number"
                                     className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
                                     placeholder="Max Age"
-                                    value={maxAge} 
+                                    value={maxAge}
                                 />
                             </div>
                         </div>
@@ -129,7 +162,7 @@ const BioData = () => {
                             <select
                                 onChange={(e) => setGender(e.target.value)}
                                 className="mt-2 p-3 w-full border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                value={gender} 
+                                value={gender}
                             >
                                 <option value="">Select Gender</option>
                                 <option value="Male">Male</option>
@@ -143,7 +176,7 @@ const BioData = () => {
                             <select
                                 onChange={(e) => setDivision(e.target.value)}
                                 className="mt-2 p-3 w-full dark:text-gray-700 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
-                                value={division} 
+                                value={division}
                             >
                                 <option value="">Select Division</option>
                                 <option value="Dhaka">Dhaka</option>
@@ -203,8 +236,8 @@ const BioData = () => {
                                 key={page}
                                 onClick={() => setCurrentPage(page)}
                                 className={`px-3 py-1 border rounded ${currentPage === page
-                                        ? "bg-pink-500 text-white "
-                                        : "bg-gray-200 dark:text-gray-700"
+                                    ? "bg-pink-500 text-white "
+                                    : "bg-gray-200 dark:text-gray-700"
                                     }`}
                             >
                                 {page + 1} {/* Display page numbers starting from 1 */}

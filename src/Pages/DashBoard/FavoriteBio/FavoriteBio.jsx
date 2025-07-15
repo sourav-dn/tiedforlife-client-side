@@ -87,7 +87,7 @@ const FavoriteBio = () => {
                                     className="bg-pink-50 hover:bg-pink-100"
                                 >
                                     <td className="border border-pink-300 px-4 py-2">
-                                        {bio.name}
+                                        {bio.fullName}
                                     </td>
                                     <td className="border border-pink-300 px-4 py-2">
                                         {bio.biodataId}
