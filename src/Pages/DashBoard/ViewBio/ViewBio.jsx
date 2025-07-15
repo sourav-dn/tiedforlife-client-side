@@ -16,6 +16,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
         const fetchBiodata = async () => {
             try {
                 const response = await axiosSecure.get(`/bioData?email=${user.email}`);
+                console.log("Response from /bioData API:", response.data);
                 if (response.data.length > 0) {
                     setBiodata(response.data[0]);
                 }
@@ -30,16 +31,58 @@ const ViewBio = ({ biodata: initialBiodata }) => {
     }, [user, axiosSecure, initialBiodata]);
 
     //Request For Premium
+    // const handlePremiumRequest = async () => {
+    //     try {
+    //         // Send request to admin for approval
+    //         const response = await axiosSecure.post("/premiumRequest", {
+    //             biodataId: biodata?.id,
+    //             name: biodata?.fullName,
+    //             email: user.email,
+    //         });
+
+    //         //new refetch for premium
+    //         const updatedResponse = await axiosSecure.get(
+    //             `/bioData?email=${user.email}`
+    //         );
+    //         if (updatedResponse.data.length > 0) {
+    //             setBiodata(updatedResponse.data[0]);
+    //         }
+
+    //         if (response.status === 200) {
+    //             setIsPremiumRequestSent(true);
+    //             setIsModalOpen(false);
+    //             Swal.fire({
+    //                 icon: "success",
+    //                 title: "Request sent for admin approval!",
+    //                 showConfirmButton: false,
+    //                 timer: 1500,
+    //             });
+    //         }
+    //     } catch (error) {
+    //         console.error("Error sending premium request:", error);
+    //         alert("You have already sent a request for admin approval!");
+    //     }
+    // };
+
     const handlePremiumRequest = async () => {
+        // FIX 1: Add a check to ensure biodata.id exists before sending the request.
+        if (!biodata?.id) {
+            console.error("Biodata ID is missing. Cannot send request.");
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Could not find your Biodata ID. Please refresh and try again.",
+            });
+            return; // Stop the function here
+        }
+
         try {
-            // Send request to admin for approval
             const response = await axiosSecure.post("/premiumRequest", {
-                biodataId: biodata?.biodataId,
-                name: biodata?.name,
+                biodataId: biodata.id,
+                name: biodata.fullName,
                 email: user.email,
             });
 
-            //new refetch for premium
             const updatedResponse = await axiosSecure.get(
                 `/bioData?email=${user.email}`
             );
@@ -58,8 +101,16 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                 });
             }
         } catch (error) {
+            // FIX 2: Improve the catch block to show the actual error message from the server.
             console.error("Error sending premium request:", error);
-            alert("You have already sent a request for admin approval!");
+            const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
+
+            Swal.fire({
+                icon: "error",
+                title: "Request Failed",
+                text: errorMessage,
+            });
+            setIsModalOpen(false); // Close modal on error
         }
     };
 
@@ -85,7 +136,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                     {/* Biodata Information */}
                     <div className="flex justify-center mb-3">
                         <img
-                            src={biodata?.profileImage || "/default-profile.png"}
+                            src={biodata?.profilePicture || "/default-profile.png"}
                             alt="Profile"
                             className="w-36 h-36 rounded-full object-cover border-4 border-white shadow-lg"
                         />
@@ -96,7 +147,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                             <h2 className="text-xl font-medium text-gray-600">
                                 Your Existing Biodata
                             </h2>
-                            <p className="font-semibold text-pink-800">{biodata?.name}</p>
+                            <p className="font-semibold text-pink-800">{biodata?.fullName}</p>
                         </div>
                     ) : (
                         <div className="bg-pink-100 border-l-4 border-pink-600 text-pink-600 p-4 mb-4">
@@ -109,7 +160,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                             {/* Left Section with More Information */}
                             <div className="border-b border-gray-300 pb-4 mb-4">
                                 <h4 className="font-semibold text-pink-500">Name</h4>
-                                <p className="text-gray-700 dark:text-white">{biodata?.name}</p>
+                                <p className="text-gray-700 dark:text-white">{biodata?.fullName}</p>
                             </div>
 
                             <div className="border-b border-gray-300 pb-4 mb-4">
@@ -119,7 +170,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
 
                             <div className="border-b border-gray-300 pb-4 mb-4">
                                 <h4 className="font-semibold text-pink-500">Date of Birth</h4>
-                                <p className="text-gray-700 dark:text-white">{biodata?.dob}</p>
+                                <p className="text-gray-700 dark:text-white">{biodata?.dateOfBirth}</p>
                             </div>
 
                             <div className="border-b border-gray-300 pb-4 mb-4">
@@ -152,12 +203,12 @@ const ViewBio = ({ biodata: initialBiodata }) => {
 
                             <div className="border-b border-gray-300 pb-4 mb-4">
                                 <h4 className="font-semibold text-pink-500">Father's Name</h4>
-                                <p className="text-gray-700 dark:text-white">{biodata?.fatherName}</p>
+                                <p className="text-gray-700 dark:text-white">{biodata?.fathersName}</p>
                             </div>
 
                             <div className="border-b border-gray-300 pb-4 mb-4">
                                 <h4 className="font-semibold text-pink-500">Mother's Name</h4>
-                                <p className="text-gray-700 dark:text-white">{biodata?.motherName}</p>
+                                <p className="text-gray-700 dark:text-white">{biodata?.mothersName}</p>
                             </div>
 
                             <div className="border-b border-gray-300 pb-4 mb-4">

@@ -12,9 +12,9 @@ const EditBioData = ({ biodataId }) => {
     const { getBiodata } = useAxiosBio();
     const navigate = useNavigate();
     const [biodata, setBiodata] = useState({
-        biodataId: "",
+        id: "",
         gender: "",
-        name: "",
+        fullName: "",
         profilePicture: "",
         dateOfBirth: "",
         height: "",
@@ -22,15 +22,24 @@ const EditBioData = ({ biodataId }) => {
         age: "",
         occupation: "",
         race: "",
-        fatherName: "",
-        motherName: "",
+        fathersName: "",
+        mothersName: "",
         permanentDivision: "",
         presentDivision: "",
-        expectedPartnerAge: "",
-        expectedPartnerHeight: "",
-        expectedPartnerWeight: "",
+        // expectedPartnerAge: "",
+        // expectedPartnerHeight: "",
+        // expectedPartnerWeight: "",
         email: "",
         mobile: "",
+        // Partner Preferences
+        partnerPreferences: {
+            ageRange: "",
+            heightRange: "",
+            weightRange: "",
+            education: "",
+            maritalStatus: "",
+            religion: "",
+        },
     });
 
     useEffect(() => {
@@ -49,6 +58,21 @@ const EditBioData = ({ biodataId }) => {
         });
     };
 
+
+    const handlePartnerChange = (e) => {
+    const { name, value } = e.target;
+    setBiodata(prevBiodata => ({
+        ...prevBiodata,
+        partnerPreferences: {
+            ...prevBiodata.partnerPreferences,
+            [name]: value,
+        },
+    }));
+};
+
+
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -60,17 +84,23 @@ const EditBioData = ({ biodataId }) => {
 
         const weight = parseInt(initialData.weight) || 0;
         const age = parseInt(initialData.age) || 0;
-        const expectedPartnerAge = parseInt(initialData.expectedPartnerAge) || 0;
-        const expectedPartnerWeight =
-            parseInt(initialData.expectedPartnerWeight) || 0;
+        // const expectedPartnerAge = parseInt(initialData.expectedPartnerAge) || 0;
+        // const expectedPartnerWeight =
+        //     parseInt(initialData.expectedPartnerWeight) || 0;
 
         const updatedBiodata = {
             ...initialData,
-            biodataId,
+            // biodataId,
             weight,
             age,
-            expectedPartnerAge,
-            expectedPartnerWeight,
+            // expectedPartnerAge,
+            // expectedPartnerWeight,
+            partnerPreferences: {
+                ageRange: biodata.partnerPreferences.ageRange,
+                heightRange: biodata.partnerPreferences.heightRange,
+                weightRange: biodata.partnerPreferences.weightRange,
+                
+            },
         };
 
         fetch("http://localhost:3000/bioData", {
@@ -85,28 +115,45 @@ const EditBioData = ({ biodataId }) => {
             .then((data) => {
                 // console.log("Server Response:", data);
 
-                if (
-                    data.insertedId ||
-                    data.message === "Biodata created successfully" ||
-                    data.message === "Biodata updated successfully"
-                ) {
+                // if (
+                //     data.insertedId ||
+                //     data.message === "Biodata created successfully" ||
+                //     data.message === "Biodata updated successfully"
+                // ) {
+                //     Swal.fire({
+                //         position: "top-end",
+                //         icon: "success",
+                //         title: "Your BioData has been saved successfully!",
+                //         showConfirmButton: false,
+                //         timer: 1500,
+                //     });
+                //     navigate("/dashboard/viewBio");
+                // }
+
+                if (data.message === "Biodata created successfully" || data.message === "Biodata updated successfully") {
                     Swal.fire({
-                        position: "top-end",
                         icon: "success",
-                        title: "Your BioData has been saved successfully!",
-                        showConfirmButton: false,
-                        timer: 1500,
+                        title: `Saved successfully! Your Biodata ID: ${data.id}`,
+                        confirmButtonText: "OK",
                     });
                     navigate("/dashboard/viewBio");
                 }
+            })
+            .catch((err) => {
+                console.error(err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Something went wrong saving your biodata.",
+                });
             });
     };
 
-        // This prevents rendering the form until authentication is confirmed
+    // This prevents rendering the form until authentication is confirmed
     if (loading) {
         return <p className="text-center my-10">Loading...</p>;
     }
-    
+
     // FIX 3: Prevent rendering if the user is not logged in
     if (!user) {
         return <p className="text-center my-10">Please log in to edit your biodata.</p>;
@@ -125,9 +172,9 @@ const EditBioData = ({ biodataId }) => {
                 <div>
                     <p className="font-bold text-sm">Name</p>
                     <TextInput
-                        id="name"
-                        name="name"
-                        value={biodata.name}
+                        id="fullName"
+                        name="fullName"
+                        value={biodata.fullName}
                         onChange={handleChange}
                         required
                         type="text"
@@ -319,9 +366,9 @@ const EditBioData = ({ biodataId }) => {
                 <div>
                     <p className="font-bold text-sm">Father Name</p>
                     <TextInput
-                        id="fatherName"
-                        name="fatherName"
-                        value={biodata.fatherName}
+                        id="fathersName"
+                        name="fathersName"
+                        value={biodata.fathersName}
                         onChange={handleChange}
                         required
                         type="text"
@@ -334,9 +381,9 @@ const EditBioData = ({ biodataId }) => {
                 <div>
                     <p className="font-bold text-sm">Mother Name</p>
                     <TextInput
-                        id="motherName"
-                        name="motherName"
-                        value={biodata.motherName}
+                        id="mothersName"
+                        name="mothersName"
+                        value={biodata.mothersName}
                         onChange={handleChange}
                         required
                         type="text"
@@ -349,24 +396,26 @@ const EditBioData = ({ biodataId }) => {
                 <div>
                     <p className="font-bold text-sm">Expected Partner Age</p>
                     <TextInput
-                        id="expectedPartnerAge"
-                        name="expectedPartnerAge"
-                        value={biodata.expectedPartnerAge}
-                        onChange={handleChange}
+                        
+                        name="ageRange"
+                        value={biodata.partnerPreferences?.ageRange || ''}
+                        onChange={handlePartnerChange}
                         type="number"
                         placeholder="Enter expected partner's age"
                         className="border-2 border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 p-2"
                     />
                 </div>
 
+                
+
                 {/* Expected Partner Height */}
                 <div>
                     <p className="font-bold text-sm">Expected Partner Height</p>
                     <Select
-                        id="expectedPartnerHeight"
-                        name="expectedPartnerHeight"
-                        value={biodata.expectedPartnerHeight}
-                        onChange={handleChange}
+                        
+                        name="heightRange"
+                        value={biodata.partnerPreferences?.heightRange || ''}
+                        onChange={handlePartnerChange}
                         required
                         className="border-2 border-pink-300 rounded-lg p-2"
                     >
@@ -378,14 +427,16 @@ const EditBioData = ({ biodataId }) => {
                     </Select>
                 </div>
 
+                
+
                 {/* Expected Partner Weight */}
                 <div>
                     <p className="font-bold text-sm">Expected Partner Weight</p>
                     <Select
-                        id="expectedPartnerWeight"
-                        name="expectedPartnerWeight"
-                        value={biodata.expectedPartnerWeight}
-                        onChange={handleChange}
+                        
+                        name="weightRange"
+                        value={biodata.partnerPreferences?.weightRange || ''}
+                        onChange={handlePartnerChange}
                         required
                         className="border-2 border-pink-300 rounded-lg p-2"
                     >
@@ -396,6 +447,7 @@ const EditBioData = ({ biodataId }) => {
                         <option value="80kg">80 kg</option>
                     </Select>
                 </div>
+                 
 
                 {/* Email */}
                 <div>
