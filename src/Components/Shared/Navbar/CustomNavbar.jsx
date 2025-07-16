@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import userIcon from "../../../assets/user.png";
 import { Link, NavLink } from "react-router";
 // import { AuthContext } from "../../../Provider/AuthProvider";
-import DataTheme from "./DataTheme";
+// import DataTheme from "./DataTheme";
 import { AuthContext } from "../../../Provider/AuthContext";
 
 
@@ -41,7 +41,7 @@ const CustomNavbar = () => {
             </NavbarBrand>
 
             <div className="flex md:order-2 gap-4">
-                <DataTheme />
+                {/* <DataTheme /> */}
                 <Dropdown
                     arrowIcon={false}
                     inline
