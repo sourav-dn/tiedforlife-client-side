@@ -91,6 +91,7 @@ const BioDataDetails = () => {
 
   useEffect(() => {
     const checkPayment = async () => {
+      console.log("CanViewContactInfo?", canViewContactInfo);
       if (!user || !user.email) {
         setHasPaidForThisBiodata(false);
         setLoadingPaymentCheck(false);
@@ -135,7 +136,7 @@ const BioDataDetails = () => {
     user?.isPremium === true ||
     hasPaidForThisBiodata === true;
 
-  console.log(canViewContactInfo, contactEmail, mobileNumber)
+  // console.log(canViewContactInfo, contactEmail, mobileNumber)
 
   if (loadingPaymentCheck) {
     return (
