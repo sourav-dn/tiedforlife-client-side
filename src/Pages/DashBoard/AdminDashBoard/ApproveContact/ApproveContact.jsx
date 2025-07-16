@@ -27,7 +27,6 @@ const ApproveContact = () => {
         },
     });
 
-    // Handle mutation for deleting payment data
     const deletePaymentMutation = useMutation({
         mutationFn: async (id) => {
             await axiosSecure.delete(`/payments/${id}`);
@@ -41,7 +40,6 @@ const ApproveContact = () => {
         },
     });
 
-    // Mutation for updating the payment status
     const updatePaymentStatusMutation = useMutation({
         mutationFn: async (id) => {
             await axiosSecure.patch(`/payment-data/${id}`, { status: "Approved" });
