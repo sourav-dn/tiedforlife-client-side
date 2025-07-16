@@ -19,7 +19,6 @@ const BioDataCard = ({data}) => {
             <img
                 src={profilePicture}
                 alt="profile"
-                // className="w-full h-44 rounded-lg object-cover"
                 className="w-full h-32 sm:h-52 md:h-52 object-cover rounded-lg"
             />
             <div className="text-center md:text-left">
