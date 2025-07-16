@@ -26,12 +26,8 @@ const EditBioData = ({ biodataId }) => {
         mothersName: "",
         permanentDivision: "",
         presentDivision: "",
-        // expectedPartnerAge: "",
-        // expectedPartnerHeight: "",
-        // expectedPartnerWeight: "",
         email: "",
         mobile: "",
-        // Partner Preferences
         partnerPreferences: {
             ageRange: "",
             heightRange: "",
@@ -72,7 +68,6 @@ const EditBioData = ({ biodataId }) => {
 
 
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -84,17 +79,12 @@ const EditBioData = ({ biodataId }) => {
 
         const weight = parseInt(initialData.weight) || 0;
         const age = parseInt(initialData.age) || 0;
-        // const expectedPartnerAge = parseInt(initialData.expectedPartnerAge) || 0;
-        // const expectedPartnerWeight =
-        //     parseInt(initialData.expectedPartnerWeight) || 0;
+        
 
         const updatedBiodata = {
             ...initialData,
-            // biodataId,
             weight,
             age,
-            // expectedPartnerAge,
-            // expectedPartnerWeight,
             partnerPreferences: {
                 ageRange: biodata.partnerPreferences.ageRange,
                 heightRange: biodata.partnerPreferences.heightRange,
@@ -115,21 +105,6 @@ const EditBioData = ({ biodataId }) => {
             .then((data) => {
                 // console.log("Server Response:", data);
 
-                // if (
-                //     data.insertedId ||
-                //     data.message === "Biodata created successfully" ||
-                //     data.message === "Biodata updated successfully"
-                // ) {
-                //     Swal.fire({
-                //         position: "top-end",
-                //         icon: "success",
-                //         title: "Your BioData has been saved successfully!",
-                //         showConfirmButton: false,
-                //         timer: 1500,
-                //     });
-                //     navigate("/dashboard/viewBio");
-                // }
-
                 if (data.message === "Biodata created successfully" || data.message === "Biodata updated successfully") {
                     Swal.fire({
                         icon: "success",
@@ -149,12 +124,12 @@ const EditBioData = ({ biodataId }) => {
             });
     };
 
-    // This prevents rendering the form until authentication is confirmed
+    
     if (loading) {
         return <p className="text-center my-10">Loading...</p>;
     }
 
-    // FIX 3: Prevent rendering if the user is not logged in
+    
     if (!user) {
         return <p className="text-center my-10">Please log in to edit your biodata.</p>;
     }
