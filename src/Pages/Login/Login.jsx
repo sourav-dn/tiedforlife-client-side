@@ -26,8 +26,8 @@ const Login = () => {
 
         // call firebase sign in with email/password
         signInWithEmailAndPassword(auth, email, password)
-            .then((result) => {
-                console.log(result)
+            .then(() => {
+                // console.log(result)
                 Swal.fire({
                     position: "top-end",
                     icon: "success",

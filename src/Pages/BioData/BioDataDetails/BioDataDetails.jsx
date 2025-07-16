@@ -177,7 +177,7 @@ const BioDataDetails = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-orange-50 to-pink-100 dark:bg-[#1d232a] p-4 sm:p-6">
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-orange-50 to-pink-100 dark:bg-[#1d232a] dark: text-gray-100 p-4 sm:p-6">
       <Card className="w-full max-w-3xl p-4 sm:p-6 md:p-8 shadow-2xl rounded-2xl bg-white border border-pink-400">
         <div className="flex flex-col md:flex-row gap-8 items-center">
           {/* Profile Section */}
