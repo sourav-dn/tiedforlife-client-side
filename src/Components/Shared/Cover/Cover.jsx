@@ -5,12 +5,11 @@ const Cover = ({img, title}) => {
     return (
         <div
             className="h-[500px] w-full bg-cover bg-center flex items-center justify-center"
-            // FIX: Combined the overlay and image into one style property for reliability
             style={{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${img})`
             }}
         >
-            {/* The separate overlay div is no longer needed */}
+            
             <div className="text-white text-center max-w-md px-5">
                 <h1 className="mb-5 text-4xl font-bold">{title}</h1>
                 <p className="mb-5">
