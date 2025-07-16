@@ -110,7 +110,7 @@ const ContactRequest = () => {
                                         {payment.name || "N/A"}
                                     </td>
                                     <td className="border border-pink-300 px-4 py-2">
-                                        {payment.bioDataId || "N/A"}
+                                        {payment.biodataId || "N/A"}
                                     </td>
                                     <td className="border border-pink-300 px-4 py-2">
                                         <button

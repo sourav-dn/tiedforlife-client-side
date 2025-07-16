@@ -32,13 +32,15 @@ const BioDataDetails = () => {
     partnerPreferences,
     contactEmail,
     mobileNumber,
-    paymentInfo,
+
   } = useLoaderData();
 
   const [similarBiodata, setSimilarBiodata] = useState([]);
 
+  const [hasPaidForThisBiodata, setHasPaidForThisBiodata] = useState(false);
+  const [loadingPaymentCheck, setLoadingPaymentCheck] = useState(true);
 
-  const [hasPaid, setHasPaid] = useState(false);
+  // const [hasPaid, setHasPaid] = useState(false);
 
 
   // const [isApproved, setIsApproved] = useState(false);
@@ -83,42 +85,65 @@ const BioDataDetails = () => {
 
 
 
-  // 2nd useeffect
 
-    useEffect(() => {
-  const checkPayment = async () => {
-    if (!user?.email) return;
 
-    try {
-      const res = await axiosSecure.get(
-        `/payments?email=${user.email}&bioDataId=${biodataId}`
-      );
-      if (res.data && res.data.length > 0) {
-        setHasPaid(true);
-      } else {
-        setHasPaid(false);
+
+
+  useEffect(() => {
+    const checkPayment = async () => {
+      if (!user || !user.email) {
+        setHasPaidForThisBiodata(false);
+        setLoadingPaymentCheck(false);
+        return;
       }
-    } catch (err) {
-      console.error("Error fetching payment status:", err);
-    }
-  };
+      try {
+        
+        const res = await axiosSecure.get(
+          `/payments?email=${user.email}&biodataId=${biodataId}`
+        );
+        
 
-  checkPayment();
-}, [user?.email, biodataId, axiosSecure]);
+        // Make sure the response contains the payment for THIS biodata
+        const hasPaid = res.data.some(payment =>
+          payment.biodataId === biodataId &&
+          payment.status === 'completed' // Ensure payment is completed
+        );
+        // console.log("Payment API response:", res.data);
+        // console.log("HasPaidForThisBiodata:", hasPaidForThisBiodata);
+        // console.log("Contact Email:", contactEmail, "Mobile:", mobileNumber);
+        // console.log("CanViewContactInfo?", canViewContactInfo);
+        setHasPaidForThisBiodata(hasPaid);
+      } catch (err) {
+        console.error("Error checking payment:", err);
+        setHasPaidForThisBiodata(false);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Payment status check failed. Please try again later.",
+        });
+      } finally {
+        setLoadingPaymentCheck(false);
+      }
+    };
 
-// console.log("User email:", user?.email);
-// console.log("biodataId:", biodataId);
-// console.log("hasPaid:", hasPaid);
+    checkPayment();
+  }, [user, biodataId, axiosSecure]);
 
 
+  const canViewContactInfo =
+    user?.role === "admin" ||
+    user?.isPremium === true ||
+    hasPaidForThisBiodata === true;
 
+  console.log(canViewContactInfo, contactEmail, mobileNumber)
 
-
-
-
-
-
-
+  if (loadingPaymentCheck) {
+    return (
+      <div className="text-center text-gray-600 mt-10">
+        Loading payment information...
+      </div>
+    );
+  }
 
 
 
@@ -303,35 +328,15 @@ const BioDataDetails = () => {
         </div>
 
         {/* Contact Info */}
-        {/* <div className="mt-6 bg-pink-50 p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold text-yellow-600 mb-3">
-            Contact Information
-          </h3>
-          <p className="text-gray-700">
-            <strong className="text-pink-600">Email:</strong> "Request Contact
-            Information"
-          </p>
-          <p className="text-gray-700">
-            <strong className="text-pink-600">Mobile:</strong> "Request Contact
-            Information"
-          </p>
-        </div> */}
-
-        {/* <p className="text-gray-700 dark:text-gray-100">
-          <strong className="text-pink-600">Email:</strong>{" "}
-          {contactEmail ? contactEmail : "Request Contact Information"}
-        </p>
-        <p className="text-gray-700 dark:text-gray-100">
-          <strong className="text-pink-600">Mobile:</strong>{" "}
-          {mobileNumber ? mobileNumber : "Request Contact Information"}
-        </p> */}
+        
 
 
         <div className="mt-6 bg-pink-50 p-6 rounded-lg shadow-md">
-  <h3 className="text-lg font-semibold text-yellow-600 mb-3">
-    Contact Information
-  </h3>
-  {user?.isPremium || hasPaid ? (
+          <h3 className="text-lg font-semibold text-yellow-600 mb-3">
+            Contact Information
+          </h3>
+
+          {contactEmail && mobileNumber ? (
     <>
       <p className="text-gray-700 dark:text-gray-100">
         <strong className="text-pink-600">Email:</strong> {contactEmail}
@@ -342,25 +347,22 @@ const BioDataDetails = () => {
     </>
   ) : (
     <>
-      <p className="text-gray-700 dark:text-gray-100">
-        <strong className="text-pink-600">Email:</strong> Request Contact Information
+      <p className="text-red-600 font-medium">
+        Contact info restricted. Please purchase to view.
       </p>
-      <p className="text-gray-700 dark:text-gray-100">
-        <strong className="text-pink-600">Mobile:</strong> Request Contact Information
-      </p>
+      <Button
+        onClick={handleReqContact}
+        className="mt-2 bg-yellow-400 hover:bg-yellow-700 text-white px-3 py-1 rounded"
+      >
+        <FaPhoneAlt className="inline mr-1" /> Request Contact Information
+      </Button>
     </>
   )}
-</div>
+          
+
+        </div>
 
 
-        {/* Optional: show payment info */}
-        {paymentInfo && (
-          <div className="mt-4 bg-green-50 p-3 rounded">
-            <p className="text-green-700">Payment ID: {paymentInfo.transitionId}</p>
-            <p className="text-green-700">Amount: {paymentInfo.amount}</p>
-            <p className="text-green-700">Date: {new Date(paymentInfo.date).toLocaleDateString()}</p>
-          </div>
-        )}
 
         {/* Action Buttons */}
         <div className="mt-6 flex flex-col sm:flex-row sm:justify-between gap-4">
@@ -370,15 +372,15 @@ const BioDataDetails = () => {
           >
             <FaHeart className="text-lg mr-2" /> Add Favorite
           </Button>
-          
-            <Button
-              onClick={handleReqContact}
-              className="px-2 py-2 font-semibold shadow-md bg-yellow-400 hover:bg-yellow-700 text-white transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
-            >
-              <FaPhoneAlt className="text-lg mr-2" /> Request Contact
-              Information
-            </Button>
-         
+
+          <Button
+            onClick={handleReqContact}
+            className="px-2 py-2 font-semibold shadow-md bg-yellow-400 hover:bg-yellow-700 text-white transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
+          >
+            <FaPhoneAlt className="text-lg mr-2" /> Request Contact
+            Information
+          </Button>
+
         </div>
       </Card>
       {/* Similar Biodata Section */}

@@ -35,77 +35,164 @@ const CheckOutForm = () => {
         }
     }, [totalPrice, axiosSecure]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
 
-        if (!stripe || !elements) {
-            setLoading(false);
-            return;
-        }
+    //     if (!stripe || !elements) {
+    //         setLoading(false);
+    //         return;
+    //     }
 
-        const card = elements.getElement(CardElement);
-        if (card === null) {
-            setLoading(false);
-            return;
-        }
+    //     const card = elements.getElement(CardElement);
+    //     if (card === null) {
+    //         setLoading(false);
+    //         return;
+    //     }
 
-        const { error: paymentMethodError } = await stripe.createPaymentMethod({
-            type: "card",
-            card,
-        });
+    //     const { error: paymentMethodError } = await stripe.createPaymentMethod({
+    //         type: "card",
+    //         card,
+    //     });
 
-        if (paymentMethodError) {
-            setError(paymentMethodError.message);
-            setLoading(false);
-            return;
-        } else {
-            setError("");
-        }
+    //     if (paymentMethodError) {
+    //         setError(paymentMethodError.message);
+    //         setLoading(false);
+    //         return;
+    //     } else {
+    //         setError("");
+    //     }
 
-        // Confirm Payment
-        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card,
-                billing_details: {
-                    email: user?.email || "anonymous",
-                    name: user?.displayName || "anonymous",
-                },
-            },
-        });
+    //     // Confirm Payment
+    //     const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+    //         payment_method: {
+    //             card: card,
+    //             billing_details: {
+    //                 email: user?.email || "anonymous",
+    //                 name: user?.displayName || "anonymous",
+    //             },
+    //         },
+    //     });
 
-        setLoading(false);
+    //     setLoading(false);
 
-        if (confirmError) {
-            setError(confirmError.message);
-        } else {
-            if (paymentIntent.status === "succeeded") {
-                // Save the payment information in the database
-                const payment = {
-                    // FIX 5: Use the data from location state
-                    name: biodataToPayFor?.fullName,
-                    email: user?.contactEmail,
-                    mobileNumber: biodataToPayFor?.mobileNumber,
-                    transitionId: paymentIntent.id,
-                    price: totalPrice,
-                    date: new Date(),
-                    bioDataId: biodataToPayFor?.biodataId,
-                    status: "pending",
-                };
+    //     if (confirmError) {
+    //         setError(confirmError.message);
+    //     } else {
+    //         if (paymentIntent.status === "succeeded") {
+    //             // Save the payment information in the database
+    //             const payment = {
+    //                 // FIX 5: Use the data from location state
+    //                 name: biodataToPayFor?.fullName,
+    //                 email: user?.contactEmail,
+    //                 mobileNumber: biodataToPayFor?.mobileNumber,
+    //                 transitionId: paymentIntent.id,
+    //                 price: totalPrice,
+    //                 date: new Date(),
+    //                 bioDataId: biodataToPayFor?.biodataId,
+    //                 status: "pending",
+    //             };
 
-                const res = await axiosSecure.post("/payments", payment);
+    //             const res = await axiosSecure.post("/payments", payment);
                 
-                if (res.data?.insertedId) {
-                    Swal.fire({
-                        title: "Success!",
-                        text: "Payment Successful. Your contact request has been sent.",
-                        icon: "success",
-                    });
-                    navigate("/dashboard/contact-request");
-                }
+    //             if (res.data?.insertedId) {
+    //                 Swal.fire({
+    //                     title: "Success!",
+    //                     text: "Payment Successful. Your contact request has been sent.",
+    //                     icon: "success",
+    //                 });
+    //                 navigate("/dashboard/contact-request");
+    //             }
+    //         }
+    //     }
+    // };
+
+
+    const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // --- THIS IS THE FIX ---
+    // 1. Add a check to ensure we have a valid user and email before doing anything.
+    if (!user || !user.email) {
+        setError("User email not found. Please try logging out and back in.");
+        Swal.fire({
+            icon: 'error',
+            title: 'Authentication Error',
+            text: 'Could not find your email. Please log in again.',
+        });
+        return; // Stop the function here
+    }
+    // --- END OF FIX ---
+
+    setLoading(true);
+
+    if (!stripe || !elements) {
+        setLoading(false);
+        return;
+    }
+
+    const card = elements.getElement(CardElement);
+    if (card === null) {
+        setLoading(false);
+        return;
+    }
+
+    const { error: paymentMethodError } = await stripe.createPaymentMethod({
+        type: "card",
+        card,
+    });
+
+    if (paymentMethodError) {
+        setError(paymentMethodError.message);
+        setLoading(false);
+        return;
+    } else {
+        setError("");
+    }
+
+    // Confirm Payment
+    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+            card: card,
+            billing_details: {
+                email: user.email, // We know user.email exists now
+                name: user.displayName || "anonymous",
+            },
+        },
+    });
+
+    setLoading(false);
+
+    if (confirmError) {
+        setError(confirmError.message);
+    } else {
+        if (paymentIntent.status === "succeeded") {
+            // 2. Create the payment object using the verified user.email
+            const payment = {
+                name: biodataToPayFor?.fullName,
+                email: user.email, // This is now guaranteed to be a valid email
+                mobileNumber: biodataToPayFor?.mobileNumber || "N/A",
+                transitionId: paymentIntent.id,
+                amount: totalPrice, // Use amount to match your server comment
+                date: new Date(),
+                biodataId: biodataToPayFor?.biodataId,
+                status: "pending",
+            };
+
+            // Use the correct variable name ('bioDataId') that your server expects for payments
+            const res = await axiosSecure.post("/payments", payment);
+            
+            if (res.data?.insertedId) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Payment Successful. Your contact request has been sent.",
+                    icon: "success",
+                });
+                navigate("/dashboard/contact-request");
             }
         }
-    };
+    }
+};
 
     return (
         <div>
