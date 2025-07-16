@@ -26,14 +26,7 @@ const CreateStory = () => {
             // Upload Image to Cloudinary
             const imageData = new FormData();
             imageData.append("image", data.image[0]);
-            // imageData.append(
-            //     "upload_preset",
-            //     import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-            // );
-            // imageData.append(
-            //     "cloud_name",
-            //     import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-            // );
+            
 
             const res = await fetch(
                 `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
@@ -42,29 +35,15 @@ const CreateStory = () => {
                     body: imageData,
                 }
             );
-            // if (!res.ok) {
-            //     const error = await res.text(); // Get the error response
-            //     console.error("Error uploading image:", error);
-            //     throw new Error("Image upload failed! " + error);
-            // }
-
             if (!res.ok) {
                 throw new Error("ImgBB image upload failed!");
             }
-
             const uploadRes = await res.json();
-            
-            // Check if the upload was successful and get the URL
             if (!uploadRes.success) {
                 throw new Error("ImgBB returned an error: " + uploadRes.error.message);
             }
             const imageUrl = uploadRes.data.url;
 
-            // const uploadRes = await res.json();
-            // if (!uploadRes || !uploadRes.url) {
-            //     console.error("Upload response:", uploadRes);
-            //     throw new Error("Image upload failed!");
-            // }
 
             // Send Story Data to Server
             const createStory = {
@@ -112,9 +91,7 @@ const CreateStory = () => {
 
     return (
         <div className="max-w-3xl mx-auto p-8 bg-white shadow-xl rounded-2xl border border-gray-200 lg:my-20">
-            {/* <h2 className="text-3xl font-bold text-center text-pink-600 mb-6">
-          Got Married? Share Your Story!
-        </h2> */}
+            
             <SectionTitle heading="Got Married" subHeading="Create Success Story" />
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 {/* Biodata Fields */}
