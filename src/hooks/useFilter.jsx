@@ -5,7 +5,7 @@ const useFilter = (minAge, maxAge, gender, division) => {
 
     const axiosSecure = useAxiosSecure();
     const [loading, setLoading] = useState(true);
-    const [bioData, setBioData] = useState([]); // bioData state added
+    const [bioData, setBioData] = useState([]); 
 
     useEffect(() => {
         setLoading(true);
@@ -19,7 +19,7 @@ const useFilter = (minAge, maxAge, gender, division) => {
         axiosSecure
             .get(`/bioData?${params.toString()}`, { withCredentials: true })
             .then((res) => {
-                setBioData(res.data); // Set bioData here
+                setBioData(res.data); 
                 setLoading(false);
             })
             .catch((error) => {
@@ -28,7 +28,7 @@ const useFilter = (minAge, maxAge, gender, division) => {
             });
     }, [minAge, maxAge, gender, division]);
 
-    return { loading, bioData, setBioData }; // Return bioData
+    return { loading, bioData, setBioData };
 
 };
 
