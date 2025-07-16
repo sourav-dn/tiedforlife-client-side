@@ -192,24 +192,24 @@ const BioDataDetails = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-orange-50 to-pink-100 dark:bg-[#1d232a] p-6">
-      <Card className="w-full max-w-3xl p-8 shadow-2xl rounded-2xl bg-white border border-pink-400">
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-orange-50 to-pink-100 dark:bg-[#1d232a] p-4 sm:p-6">
+      <Card className="w-full max-w-3xl p-4 sm:p-6 md:p-8 shadow-2xl rounded-2xl bg-white border border-pink-400">
         <div className="flex flex-col md:flex-row gap-8 items-center">
           {/* Profile Section */}
           <div className="w-full md:w-1/3 flex flex-col items-center">
             <img
               src={profilePicture}
               alt="Profile"
-              className="w-40 h-40 object-cover rounded-full border-4 border-yellow-500 shadow-lg transform hover:scale-105 transition-transform duration-500"
+              className="w-36 sm:w-40 h-36 sm:h-40 object-cover rounded-full border-4 border-yellow-500 shadow-lg transform hover:scale-105 transition-transform duration-500"
             />
-            <h2 className="text-xl font-bold text-pink-600 mt-4">
+            <h2 className="text-lg sm:text-xl font-bold text-pink-600 mt-4">
               BioData ID: {biodataId}
             </h2>
           </div>
 
           {/* BioData Details Table */}
           <div className="w-full md:w-2/3">
-            <h3 className="text-2xl font-semibold text-yellow-400 border-b pb-2">
+            <h3 className="text-xl sm:text-2xl font-semibold text-yellow-400 border-b pb-2">
               Personal Details
             </h3>
             <table className="w-full mt-3 border-collapse">
@@ -304,11 +304,11 @@ const BioDataDetails = () => {
         </div>
 
         {/* Expected Partner Details */}
-        <div className="mt-6 bg-purple-50 p-6 rounded-lg shadow-md">
+        <div className="mt-6 bg-purple-50 p-4 sm:p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold text-yellow-600 mb-3">
             Expected Partner Details
           </h3>
-          <div className="grid grid-cols-2 gap-4 text-gray-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
             <p>
               <strong className="text-pink-600">Age: </strong>{" "}
               {partnerPreferences?.ageRange}
@@ -331,7 +331,7 @@ const BioDataDetails = () => {
 
 
 
-        <div className="mt-6 bg-pink-50 p-6 rounded-lg shadow-md">
+        <div className="mt-6 bg-pink-50 p-4 sm:p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold text-yellow-600 mb-3">
             Contact Information
           </h3>
