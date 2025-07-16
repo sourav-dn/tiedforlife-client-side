@@ -10,7 +10,7 @@ const FavoriteBio = () => {
     const [favoriteBio, setFavoriteBio] = useState([]);
     const { user } = useAuth();
 
-    //  Backend data fetch
+    
     useEffect(() => {
         if (!user) {
             return;
@@ -39,7 +39,6 @@ const FavoriteBio = () => {
 
                 axiosSecure.delete(`/favorite/${id}`).then((res) => {
                     if (res.data.deletedCount > 0) {
-                        // filter out the deleted item
                         setFavoriteBio((prevState) =>
                             prevState.filter((bio) => bio._id !== id)
                         );
