@@ -2,7 +2,7 @@
 
 ## 📝 Project Overview
 
-**MatrimonyBD** is a fully responsive and feature-rich matrimony platform developed using the **MERN Stack** (MongoDB, Express.js, React, Node.js). The platform provides a seamless experience for users to create, browse, and manage biodata profiles, request contact information, and submit success stories. It includes dedicated dashboards for both **users** and **admins**, supports **premium memberships**, **Stripe payments**, **role-based access control**, and **real-time notifications** — making it a complete matrimonial solution.
+**MatrimonyBD** is a fully responsive and feature-rich matrimony platform developed using the **MERN Stack** (MongoDB, Express.js, React, Node.js). The platform provides a seamless experience for users to create, browse, and manage biodata profiles, request contact information, and submit success stories. It includes dedicated dashboards for both **users** and **admins**, supports **premium memberships**, **Stripe payments**, **role-based access control**, and **real-time notifications** - making it a complete matrimonial solution.
 
 ---
 
