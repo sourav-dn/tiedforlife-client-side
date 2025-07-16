@@ -38,18 +38,18 @@ export const router = createBrowserRouter([
       {
         path: "/successReview/:id",
         element: <SuccessStoryDetails></SuccessStoryDetails>,
-        loader: ({ params }) => fetch(`http://localhost:3000/successReview/${params.id}`)
+        loader: ({ params }) => fetch(`https://matrimony-server-side-nu.vercel.app/successReview/${params.id}`)
       },
       {
         path: "/bioData",
         element: <BioData></BioData>,
-        loader: (() => fetch('http://localhost:3000/bioDataCount'))
+        loader: (() => fetch('https://matrimony-server-side-nu.vercel.app/bioDataCount'))
       },
       {
         path: "bioData/:id",
         element: <PrivateRoute><BioDataDetails /></PrivateRoute>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/bioData/${params.id}`, {
+          fetch(`https://matrimony-server-side-nu.vercel.app/bioData/${params.id}`, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${localStorage.getItem("access-token")}`,

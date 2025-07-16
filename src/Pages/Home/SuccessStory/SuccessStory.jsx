@@ -16,7 +16,7 @@ const SuccessStory = () => {
     const [sortOrder, setSortOrder] = useState("ascending");
 
     useEffect(() => {
-        fetch("http://localhost:3000/successReview")
+        fetch("https://matrimony-server-side-nu.vercel.app/successReview")
             .then((res) => res.json())
             .then((data) => setReviews(data));
     }, []);

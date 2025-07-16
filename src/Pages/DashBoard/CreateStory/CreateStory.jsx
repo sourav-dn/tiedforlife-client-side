@@ -82,7 +82,7 @@ const CreateStory = () => {
             };
             // console.log("Submitting story:", createStory);
 
-            const response = await fetch("http://localhost:3000/successReview", {
+            const response = await fetch("https://matrimony-server-side-nu.vercel.app/successReview", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(createStory),

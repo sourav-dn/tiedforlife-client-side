@@ -103,7 +103,7 @@ const EditBioData = ({ biodataId }) => {
             },
         };
 
-        fetch("http://localhost:3000/bioData", {
+        fetch("https://matrimony-server-side-nu.vercel.app/bioData", {
             method: "POST",
             headers: {
                 "content-type": "application/json",
