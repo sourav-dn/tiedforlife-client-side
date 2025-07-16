@@ -35,6 +35,26 @@
 - ✅ **SweetAlert2 and React Hot Toast** for beautiful notifications
 
 
+## 🛠️ Technology Stack
+
+### Frontend:
+- React.js
+- React Router 
+- TanStack Query (React Query)
+- Tailwind CSS (without DaisyUI)
+- Firebase Authentication (Email/Password, Google OAuth)
+- SweetAlert2 & React Hot Toast
+- React rating for rating
+- lottie react for animation 
+
+### Backend:
+- Node.js
+- Express.js
+- MongoDB
+- JSON Web Tokens (JWT)
+- Stripe Payment Gateway
+- dotenv for environment variables
+- Flowbite for creating UI 
 
 
 # React + Vite
