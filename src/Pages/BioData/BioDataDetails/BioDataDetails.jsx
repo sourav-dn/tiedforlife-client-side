@@ -40,12 +40,7 @@ const BioDataDetails = () => {
   const [hasPaidForThisBiodata, setHasPaidForThisBiodata] = useState(false);
   const [loadingPaymentCheck, setLoadingPaymentCheck] = useState(true);
 
-  // const [hasPaid, setHasPaid] = useState(false);
-
-
-  // const [isApproved, setIsApproved] = useState(false);
-
-  // Fetch similar biodata based on gender
+  
   useEffect(() => {
     const fetchSimilarBiodata = async () => {
       try {
@@ -84,11 +79,6 @@ const BioDataDetails = () => {
   }, [gender, biodataId, axiosSecure]);
 
 
-
-
-
-
-
   useEffect(() => {
     const checkPayment = async () => {
       console.log("CanViewContactInfo?", canViewContactInfo);
@@ -103,8 +93,6 @@ const BioDataDetails = () => {
           `/payments?email=${user.email}&biodataId=${biodataId}`
         );
 
-
-        // Make sure the response contains the payment for THIS biodata
         const hasPaid = res.data.some(payment =>
           payment.biodataId === biodataId &&
           payment.status === 'completed' // Ensure payment is completed
@@ -145,10 +133,6 @@ const BioDataDetails = () => {
       </div>
     );
   }
-
-
-
-
 
 
   const handleAddFavorite = () => {
@@ -329,14 +313,10 @@ const BioDataDetails = () => {
         </div>
 
         {/* Contact Info */}
-
-
-
         <div className="mt-6 bg-pink-50 p-4 sm:p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold text-yellow-600 mb-3">
             Contact Information
           </h3>
-
           {contactEmail && mobileNumber ? (
             <>
               <p className="text-gray-700 dark:text-gray-100">
@@ -359,12 +339,7 @@ const BioDataDetails = () => {
               </Button>
             </>
           )}
-
-
         </div>
-
-
-
         {/* Action Buttons */}
         <div className="mt-6 flex flex-col sm:flex-row sm:justify-between gap-4">
           <Button
