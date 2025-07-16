@@ -44,20 +44,6 @@ const ContactRequest = () => {
         });
     };
 
-    // Handle status update
-    // const updateStatusMutation = useMutation({
-    //     mutationFn: async ({ _id, status }) => {
-    //         const res = await axiosSecure.patch(`/contact/${_id}`, { status });
-    //         return res.data;
-    //     },
-    //     onSuccess: () => {
-    //         Swal.fire("Status Updated!", "The status has been updated.", "success");
-    //         refetch();
-    //     },
-    //     onError: () => {
-    //         Swal.fire("Error!", "Failed to update status.", "error");
-    //     },
-    // });
 
     // Mutation for updating the status of a contact request
     const updateStatusMutation = useMutation({
@@ -132,7 +118,7 @@ const ContactRequest = () => {
                                     </td> */}
 
                                     <td className="border border-pink-300 px-4 py-2">
-                                        {/* FIX: Conditionally render mobile number and add fallback */}
+                                        
                                         {payment.status?.toLowerCase() === 'approved' ? (
                                             payment.mobileNumber || <span className="text-gray-500">Not Available</span>
                                         ) : (
