@@ -97,11 +97,11 @@ const BioDataDetails = () => {
         return;
       }
       try {
-        
+
         const res = await axiosSecure.get(
           `/payments?email=${user.email}&biodataId=${biodataId}`
         );
-        
+
 
         // Make sure the response contains the payment for THIS biodata
         const hasPaid = res.data.some(payment =>
@@ -328,7 +328,7 @@ const BioDataDetails = () => {
         </div>
 
         {/* Contact Info */}
-        
+
 
 
         <div className="mt-6 bg-pink-50 p-6 rounded-lg shadow-md">
@@ -337,28 +337,28 @@ const BioDataDetails = () => {
           </h3>
 
           {contactEmail && mobileNumber ? (
-    <>
-      <p className="text-gray-700 dark:text-gray-100">
-        <strong className="text-pink-600">Email:</strong> {contactEmail}
-      </p>
-      <p className="text-gray-700 dark:text-gray-100">
-        <strong className="text-pink-600">Mobile:</strong> {mobileNumber}
-      </p>
-    </>
-  ) : (
-    <>
-      <p className="text-red-600 font-medium">
-        Contact info restricted. Please purchase to view.
-      </p>
-      <Button
-        onClick={handleReqContact}
-        className="mt-2 bg-yellow-400 hover:bg-yellow-700 text-white px-3 py-1 rounded"
-      >
-        <FaPhoneAlt className="inline mr-1" /> Request Contact Information
-      </Button>
-    </>
-  )}
-          
+            <>
+              <p className="text-gray-700 dark:text-gray-100">
+                <strong className="text-pink-600">Email:</strong> {contactEmail}
+              </p>
+              <p className="text-gray-700 dark:text-gray-100">
+                <strong className="text-pink-600">Mobile:</strong> {mobileNumber}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-red-600 font-medium">
+                Contact info restricted. Please purchase to view.
+              </p>
+              <Button
+                onClick={handleReqContact}
+                className="mt-2 bg-yellow-400 hover:bg-yellow-700 text-white px-3 py-1 rounded"
+              >
+                <FaPhoneAlt className="inline mr-1" /> Request Contact Information
+              </Button>
+            </>
+          )}
+
 
         </div>
 
@@ -399,9 +399,9 @@ const BioDataDetails = () => {
               <div className="p-4">
                 <h4 className="text-lg font-semibold">{biodata.fullName}</h4>
                 <p className="text-gray-600">Age: {biodata.age}</p>
-                <Link to={`/bioData`}>
-                  <button className="mt-4 bg-gradient-to-r from-pink-400 to-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">
-                    View All
+                <Link to={`/bioData/${biodata._id}`}>
+                  <button className="mt-4 w-full bg-gradient-to-r from-pink-400 to-pink-500 text-white py-2 px-4 rounded-lg hover:from-pink-500 hover:to-pink-600">
+                    View Profile
                   </button>
                 </Link>
               </div>
