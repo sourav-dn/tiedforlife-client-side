@@ -12,60 +12,15 @@ const BioData = () => {
     const [maxAge, setMaxAge] = useState("");
     const [gender, setGender] = useState("");
     const [division, setDivision] = useState("");
-    // const [bioData, setBioData] = useState([]); // bioData state directly managed here
     const { bioData, setBioData } = useFilter(minAge, maxAge, gender, division);
     const [currentPage, setCurrentPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const axiosSecure = useAxiosSecure();
 
-    // Function to fetch biodata based on current filter states (can be reused)
-    // const fetchBioDataWithFilters = async (
-    //     ageMin,
-    //     ageMax,
-    //     bioType,
-    //     permDivision
-    //     // Pagination parameters (page, limit) would be added here if backend handles it
-    // ) => {
-    //     try {
-    //         const res = await axiosSecure.get(
-    //             // Construct URL with parameters. Empty strings will be sent for unfilled fields,
-    //             // which the backend is designed to ignore due to its 'if (param)' checks.
-    //             `/bioData?minAge=${ageMin || ''}&maxAge=${ageMax || ''}&biodataType=${bioType || ''}&permanentDivision=${permDivision || ''}`,
-    //             {
-    //                 withCredentials: true,
-    //             }
-    //         );
-    //         setBioData(res?.data);
-    //     } catch (error) {
-    //         console.error("Error fetching bioData:", error);
-    //     }
-    // };
-
-    // Initial fetch of all biodata when the component mounts.
-    // This will result in an initial 'Query: {}' on the backend, which is expected for an unfiltered load.
-    // useEffect(() => {
-    //     fetchBioDataWithFilters(minAge, maxAge, gender, division); // Initial call with empty filter states
-    // }, [axiosSecure]); // Dependency on axiosSecure to avoid lint warnings; effectively runs once on mount
-
-    // Handler for filter form submission
-    // const handleFilter = (e) => {
-    //     e.preventDefault();
-    //     // Trigger a fetch with the current state values
-    //     fetchBioDataWithFilters(minAge, maxAge, gender, division);
-    //     setCurrentPage(0); // Reset to first page after applying new filters
-    // };
-
-    // Pagination logic (assuming count is loaded correctly via useLoaderData)
-    // const { count } = useLoaderData();
-
-    // FIX: Ensure count is a valid number to prevent "Invalid array length" error.
-    // const safeCount = typeof count === 'number' && count >= 0 ? count : 0;
-
 
 
     const handleFilter = (e) => {
     e.preventDefault();
-    // console.log(minAge, maxAge, gender, division);
 
     axiosSecure
       .get(
@@ -82,7 +37,6 @@ const BioData = () => {
         console.error("Error fetching bioData:", error);
       });
 
-    // }, [];
   };
 
   const { count } = useLoaderData();
@@ -90,18 +44,12 @@ const BioData = () => {
   const numberOfPages = Math.ceil(count / itemsPerPage);
 
 
-
-
     // const numberOfPages = Math.ceil(safeCount / itemsPerPage);
-    const pages = [...Array(numberOfPages).keys()]; // Creates an array [0, 1, ..., numberOfPages-1]
-
+    const pages = [...Array(numberOfPages).keys()];
     const handleItemsPerPage = (e) => {
         const val = parseInt(e.target.value);
         setItemsPerPage(val);
-        setCurrentPage(0); // Reset to first page
-        // If your backend handles pagination (sending only `limit` items),
-        // you would need to re-fetch data here:
-        // fetchBioDataWithFilters(minAge, maxAge, gender, division, 0, val);
+        setCurrentPage(0);
     };
 
     const handlePrevPage = () => {
@@ -111,7 +59,6 @@ const BioData = () => {
     };
 
     const handleNextPage = () => {
-        // Correct condition: Ensure not to go beyond the last page index
         if (currentPage < pages.length - 1) {
             setCurrentPage(currentPage + 1);
         }
@@ -214,7 +161,6 @@ const BioData = () => {
                                     <BioDataCard key={data._id} data={data} />
                                 ))
                         ) : (
-                            // Message shown when no biodata is found after filters/initial load
                             <p className="text-gray-500">No biodata found matching your criteria.</p>
                         )}
                     </div>
