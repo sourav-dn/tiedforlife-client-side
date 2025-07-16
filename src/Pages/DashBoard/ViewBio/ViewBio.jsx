@@ -30,42 +30,9 @@ const ViewBio = ({ biodata: initialBiodata }) => {
         }
     }, [user, axiosSecure, initialBiodata]);
 
-    //Request For Premium
-    // const handlePremiumRequest = async () => {
-    //     try {
-    //         // Send request to admin for approval
-    //         const response = await axiosSecure.post("/premiumRequest", {
-    //             biodataId: biodata?.id,
-    //             name: biodata?.fullName,
-    //             email: user.email,
-    //         });
-
-    //         //new refetch for premium
-    //         const updatedResponse = await axiosSecure.get(
-    //             `/bioData?email=${user.email}`
-    //         );
-    //         if (updatedResponse.data.length > 0) {
-    //             setBiodata(updatedResponse.data[0]);
-    //         }
-
-    //         if (response.status === 200) {
-    //             setIsPremiumRequestSent(true);
-    //             setIsModalOpen(false);
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 title: "Request sent for admin approval!",
-    //                 showConfirmButton: false,
-    //                 timer: 1500,
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error("Error sending premium request:", error);
-    //         alert("You have already sent a request for admin approval!");
-    //     }
-    // };
 
     const handlePremiumRequest = async () => {
-        // FIX 1: Add a check to ensure biodata.id exists before sending the request.
+        
         if (!biodata?.id) {
             console.error("Biodata ID is missing. Cannot send request.");
             Swal.fire({
@@ -73,7 +40,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                 title: "Error",
                 text: "Could not find your Biodata ID. Please refresh and try again.",
             });
-            return; // Stop the function here
+            return; 
         }
 
         try {
@@ -101,7 +68,7 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                 });
             }
         } catch (error) {
-            // FIX 2: Improve the catch block to show the actual error message from the server.
+            
             console.error("Error sending premium request:", error);
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
 
@@ -114,12 +81,12 @@ const ViewBio = ({ biodata: initialBiodata }) => {
         }
     };
 
-    // This prevents rendering the form until authentication is confirmed
+    
     if (loading) {
         return <p className="text-center my-10">Loading...</p>;
     }
 
-    // FIX 3: Prevent rendering if the user is not logged in
+    
     if (!user) {
         return <p className="text-center my-10">Please log in to view your biodata.</p>;
     }
@@ -282,20 +249,6 @@ const ViewBio = ({ biodata: initialBiodata }) => {
                             {isPremiumRequestSent ? "Request Sent" : "Request Premium"}
                         </button>
                     )}
-
-                    {/* Modal Component */}
-                    {/* <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                        <Modal.Header>Request Premium</Modal.Header>
-                        <Modal.Body>
-                            <p>Are you sure you want to request a premium membership?</p>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={handlePremiumRequest}>Yes, Request</Button>
-                            <Button color="gray" onClick={() => setIsModalOpen(false)}>
-                                Cancel
-                            </Button>
-                        </Modal.Footer>
-                    </Modal> */}
                     <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
                         <div className="p-6 space-y-4">
                             <h3 className="text-xl font-semibold text-gray-900">Request Premium</h3>
