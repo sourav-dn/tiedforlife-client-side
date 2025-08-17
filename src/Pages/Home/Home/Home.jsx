@@ -2,8 +2,10 @@ import Banner from "../Banner/Banner";
 import Category from "../Category/Category";
 import HowItWorks from "../HowItWorks/HowItWorks";
 import PremiumMember from "../PremiumMember/PremiumMember";
+import Privacy from "../Privacy/Privacy";
 import SuccessCounter from "../SuccessCounter/SuccessCounter";
 import SuccessStory from "../SuccessStory/SuccessStory";
+import TeamMember from "../Team Member/TeamMember";
 
 
 const Home = () => {
@@ -16,6 +18,8 @@ const Home = () => {
             <SuccessCounter></SuccessCounter>
             <SuccessStory></SuccessStory>
             <Category></Category>
+            <Privacy></Privacy>
+            <TeamMember></TeamMember>
         </div>
     );
 };
