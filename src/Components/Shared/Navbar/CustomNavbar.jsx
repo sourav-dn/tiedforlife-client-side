@@ -93,12 +93,30 @@ const CustomNavbar = () => {
 
                 {user && (
                     <>
-                    <NavbarLink as={NavLink} to="/contactUs" className={({ isActive }) =>
-                    isActive ? "text-pink-800 font-bold" : "text-white"
-                }>Contact Us</NavbarLink>
-                    <NavbarLink as={NavLink} to="/dashboard" className={({ isActive }) =>
+                        <NavbarLink as={NavLink} to="/contactUs" className={({ isActive }) =>
+                            isActive ? "text-pink-800 font-bold" : "text-white"
+                        }>Contact Us</NavbarLink>
+                        {/* <NavbarLink as={NavLink} to="/dashboard" className={({ isActive }) =>
                         isActive ? "text-pink-800 font-bold" : "text-white"
-                    }>Dashboard</NavbarLink>
+                    }>Dashboard</NavbarLink> */}
+                        <Dropdown label="Dashboard" inline>
+                            <DropdownItem as={NavLink} to="/dashboard/editBio">
+                                Edit BioData
+                            </DropdownItem>
+                            <DropdownItem as={NavLink} to="/dashboard/viewBio">
+                                View BioData
+                            </DropdownItem>
+                            <DropdownItem as={NavLink} to="/dashboard/contact-request">
+                                My Contact Request
+                            </DropdownItem>
+                            <DropdownItem as={NavLink} to="/dashboard/favoriteBio">
+                                Favorites BioData
+                            </DropdownItem>
+                            <DropdownItem as={NavLink} to="/dashboard/createStory">
+                                Create Success Story
+                            </DropdownItem>
+                        </Dropdown>
+
                     </>
                 )}
             </NavbarCollapse>
