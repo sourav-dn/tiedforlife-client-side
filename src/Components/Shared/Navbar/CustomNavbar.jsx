@@ -32,7 +32,7 @@ const CustomNavbar = () => {
     };
 
     return (
-        <Navbar fluid rounded className="bg-opacity-30 bg-pink-200">
+        <Navbar fluid rounded className="bg-opacity-30 bg-pink-200 sticky top-0 z-50">
             <NavbarBrand as={NavLink} to="/">
                 <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
