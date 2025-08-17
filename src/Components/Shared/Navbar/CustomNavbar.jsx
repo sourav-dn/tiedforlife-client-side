@@ -100,6 +100,12 @@ const CustomNavbar = () => {
                         isActive ? "text-pink-800 font-bold" : "text-white"
                     }>Dashboard</NavbarLink> */}
                         <Dropdown label="Dashboard" inline>
+                            <DropdownItem as={NavLink} to="/dashboard/profile">
+                                My Profile
+                            </DropdownItem>
+                            <DropdownItem as={NavLink} to="/dashboard">
+                                Dashboard Overall
+                            </DropdownItem>
                             <DropdownItem as={NavLink} to="/dashboard/editBio">
                                 Edit BioData
                             </DropdownItem>

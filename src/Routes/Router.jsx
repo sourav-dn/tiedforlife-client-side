@@ -23,6 +23,7 @@ import ManageUsers from "../Pages/DashBoard/AdminDashBoard/ManageUsers/ManageUse
 import SuccessStories from "../Pages/DashBoard/AdminDashBoard/SuccessStories/SuccessStories";
 import PrivateRoute from "./PrivateRoute";
 import Error from "../Pages/ErrorPage/Error";
+import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 
 
 export const router = createBrowserRouter([
@@ -86,6 +87,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <PrivateRoute><DashBoardHome></DashBoardHome></PrivateRoute>
+      },
+      {
+        path: "profile",
+        element: <PrivateRoute><ProfilePage></ProfilePage></PrivateRoute>
       },
       {
         path: "editBio",
