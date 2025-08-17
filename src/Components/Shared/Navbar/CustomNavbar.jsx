@@ -32,7 +32,11 @@ const CustomNavbar = () => {
     };
 
     return (
-        <Navbar fluid rounded className="bg-opacity-30 bg-pink-200 sticky top-0 z-50">
+        <Navbar
+            fluid
+            rounded
+            className="sticky top-0 z-50 bg-pink-200 bg-opacity-30 transition-colors duration-300"
+        >
             <NavbarBrand as={NavLink} to="/">
                 <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -85,7 +89,7 @@ const CustomNavbar = () => {
                     isActive ? "text-pink-800 font-bold" : "text-white"
                 }>Bio-Data</NavbarLink>
                 <NavbarLink as={NavLink} to="/aboutUs" className={({ isActive }) =>
-                    isActive ? "text-pink-800 font-bold" : "text-white"
+                    isActive ? "text-pink-800 dark:text-gray-200 font-bold" : "text-white"
                 }>About Us</NavbarLink>
                 {/* <NavbarLink as={NavLink} to="/contactUs" className={({ isActive }) =>
                     isActive ? "text-pink-800 font-bold" : "text-white"

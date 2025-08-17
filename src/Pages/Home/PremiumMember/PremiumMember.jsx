@@ -46,7 +46,7 @@ const PremiumMember = () => {
     const sortedPremium = sortData([...premium], sortOrder);
 
     return (
-        <section className="my-20 px-6 md:px-8 lg:px-16 py-5">
+        <section className="my-20 px-6 md:px-8 lg:px-16 py-5 bg-white dark:bg-gray-800 transition-colors duration-300">
             <SectionTitle
                 heading="Our Premium Members"
                 subHeading="Be a Premium Member to Be Part of Our Story"
@@ -56,7 +56,7 @@ const PremiumMember = () => {
             <div className="mb-6 text-center">
                 <label
                     htmlFor="sortOrder"
-                    className="mr-4 text-xl font-semibold text-pink-600"
+                    className="mr-4 text-xl font-semibold text-pink-600 dark:text-pink-400"
                 >
                     Sort by Age:
                 </label>
@@ -64,7 +64,7 @@ const PremiumMember = () => {
                     id="sortOrder"
                     value={sortOrder}
                     onChange={handleSortChange}
-                    className="bg-white text-pink-900 py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    className="bg-white text-pink-900 dark:text-gray-200 py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
                 >
                     <option value="default">Default</option>
                     <option value="ascending">Ascending</option>
@@ -77,7 +77,7 @@ const PremiumMember = () => {
                 {sortedPremium.slice(0, 6).map((member) => (
                     <div
                         key={member._id}
-                        className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                        className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-white dark:bg-gray-800"
                     >
                         {/* Profile Image */}
                         <img

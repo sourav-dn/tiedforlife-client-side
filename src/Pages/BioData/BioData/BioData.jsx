@@ -68,11 +68,11 @@ const BioData = () => {
         <div>
             <Cover img={coverImg} title="Your Bio-Data, Your Identity" />
 
-            <div className="flex flex-col lg:flex-row min-h-screen my-10 gap-10">
+            <div className="flex flex-col lg:flex-row min-h-screen my-10 gap-10 dark:bg-gray-800">
                 {/* Sidebar for Filters */}
                 <Sidebar
                     aria-label="Bio Data Sidebar"
-                    className="w-96 h-auto p-6 mx-auto rounded-lg"
+                    className="w-96 h-auto p-6 mx-auto rounded-lg "
                 >
                     <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">Filters</h2>
                     <form onSubmit={handleFilter} className="space-y-6">

@@ -22,52 +22,53 @@ const ContactUs = () => {
             {/* Contact Section */}
             <div className="container mx-auto py-16 px-8">
                 <h2 className="text-4xl font-extrabold text-center mb-12 text-pink-600">Get in Touch</h2>
-                <div className="grid md:grid-cols-2 gap-12 bg-pink-50 dark:bg-gray-700 shadow-xl p-10 rounded-2xl">
+                <div className="grid md:grid-cols-2 gap-12 bg-pink-50 dark:bg-gray-800 shadow-xl p-10 rounded-2xl">
 
                     {/* Contact Info with Icons */}
                     <div className="space-y-6 flex flex-col justify-center items-start">
                         <p className="text-lg flex items-center gap-4">
                             <FaMapMarkerAlt className="text-pink-500 text-xl" />
-                            <strong className="text-pink-500">Address:</strong> Dhaka 1205, Bangladesh
+                            <strong className="text-pink-500 dark:text-gray-800">Address:</strong> <p className='text-gray-500 dark:text-gray-800'>Dhaka 1205, Bangladesh</p>
                         </p>
-                        <p className="text-lg flex items-center gap-4">
-                            <FaPhoneAlt className="text-pink-500 text-xl" />
-                            <strong className="text-pink-500">Phone:</strong> +123 456 789
+
+                        <p className="text-lg flex items-center gap-4 ">
+                            <FaPhoneAlt className="text-pink-500 text-xl dark:text-gray-700" />
+                            <strong className="text-pink-500">Phone:</strong> <p className='text-gray-500 dark:text-gray-800'>+123 456 789</p>
                         </p>
                         <p className="text-lg flex items-center gap-4">
                             <FaEnvelope className="text-pink-500 text-xl" />
-                            <strong className="text-pink-500">Email:</strong> info@gmail.com
+                            <strong className="text-pink-500">Email:</strong> <p className='text-gray-500 dark:text-gray-800'>info@gmail.com</p>
                         </p>
                     </div>
 
                     {/* Contact Form */}
-                    <form onSubmit={handleSubmit} className="space-y-5 bg-gray-50 p-8 rounded-lg shadow-lg">
+                    <form onSubmit={handleSubmit} className="space-y-5 bg-gray-50 dark:bg-gray-700 p-8 rounded-lg shadow-lg">
                         <input
                             type="text"
                             placeholder="Your Name"
-                            className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+                            className="w-full text-gray-600 p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
                             required
                         />
                         <input
                             type="email"
                             placeholder="Your Email"
-                            className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+                            className="w-full p-4 text-gray-600 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
                             required
                         />
                         <input
                             type="text"
                             placeholder="Subject"
-                            className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+                            className="w-full p-4 text-gray-600 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
                             required
                         />
                         <textarea
                             placeholder="Your Message"
-                            className="w-full p-4 border rounded-lg h-32 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
+                            className="w-full p-4 text-gray-600 border rounded-lg h-32 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-sm"
                             required
                         ></textarea>
                         <button
                             type="submit"
-                            className="bg-gradient-to-r from-pink-300 to-pink-500 text-white px-6 py-3 rounded-lg w-full shadow-lg hover:scale-105 transition-all duration-300"
+                            className="bg-gradient-to-r from-pink-300 to-pink-500 text-white px-6 py-3 rounded-lg w-full shadow-lg hover:scale-105 transitiduration-300"
                         >
                             Send Message
                         </button>

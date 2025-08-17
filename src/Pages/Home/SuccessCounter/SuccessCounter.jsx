@@ -31,7 +31,7 @@ const SuccessCounter = () => {
                 ></SectionTitle>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-5">
                     {/* Girls Count */}
-                    <div className="bg-white dark:bg-gray-700 shadow-lg rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-500 cursor-pointer">
+                    <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-500 cursor-pointer">
                         <FaFemale className="text-pink-500 text-5xl mx-auto" />
                         <h3 className="text-3xl font-bold text-gray-700 dark:text-gray-200 mt-4">
                             {stats.girls}
