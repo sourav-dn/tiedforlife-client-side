@@ -1,4 +1,5 @@
 import Banner from "../Banner/Banner";
+import Category from "../Category/Category";
 import HowItWorks from "../HowItWorks/HowItWorks";
 import PremiumMember from "../PremiumMember/PremiumMember";
 import SuccessCounter from "../SuccessCounter/SuccessCounter";
@@ -14,6 +15,7 @@ const Home = () => {
             <HowItWorks></HowItWorks>
             <SuccessCounter></SuccessCounter>
             <SuccessStory></SuccessStory>
+            <Category></Category>
         </div>
     );
 };
