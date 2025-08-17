@@ -87,9 +87,9 @@ const CustomNavbar = () => {
                 <NavbarLink as={NavLink} to="/aboutUs" className={({ isActive }) =>
                     isActive ? "text-pink-800 font-bold" : "text-white"
                 }>About Us</NavbarLink>
-                <NavbarLink as={NavLink} to="/contactUs" className={({ isActive }) =>
+                {/* <NavbarLink as={NavLink} to="/contactUs" className={({ isActive }) =>
                     isActive ? "text-pink-800 font-bold" : "text-white"
-                }>Contact Us</NavbarLink>
+                }>Contact Us</NavbarLink> */}
 
                 {user && (
                     <NavbarLink as={NavLink} to="/dashboard" className={({ isActive }) =>
