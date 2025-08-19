@@ -12,10 +12,7 @@
 
 ---
 
-## 👤 Admin Login Credentials
 
-- **Email:** info@gmail.com 
-- **Password:** 123@Info
 
 ---
 
