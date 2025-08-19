@@ -10,9 +10,6 @@
 
 🔗 **Live Site**: [https://tiedforlife-d52c8.web.app]
 
----
-
-
 
 ---
 
